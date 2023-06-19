@@ -83,8 +83,11 @@ import Foundation
             port: port,
             path: path,
             useTLS: useTLS,
-            activityTimeout: activityTimeout
+            activityTimeout: activityTimeout,
+            autoReconnect: true
+            
         )
+        
         print("PusherWebsocketReactNative: host \(host) port \(port) path \(path ?? "") useTLS \(useTLS) activityTimeout \(activityTimeout ?? 0)")
         PusherWebsocketReactNative.pusher = Pusher(key: args["apiKey"] as! String, options: options)
         if args["maxReconnectionAttempts"] is Int {
@@ -103,8 +106,12 @@ import Foundation
 
         PusherWebsocketReactNative.pusher.connection.delegate = PusherWebsocketReactNative.shared
         PusherWebsocketReactNative.pusher.bind(eventCallback: onEvent)
+
+
+        
         resolve(nil)
     }
+    
 
     override static func requiresMainQueueSetup() -> Bool {
         return false
@@ -150,7 +157,7 @@ import Foundation
     }
 
     public func debugLog(message: String) {
-        //print("DEBUG:", message)
+        print("DEBUG PUSHER:", message)
     }
 
     public func subscribedToChannel(name: String) {
