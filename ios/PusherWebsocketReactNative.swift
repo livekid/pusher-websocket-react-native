@@ -85,6 +85,7 @@ import Foundation
             useTLS: useTLS,
             activityTimeout: activityTimeout
         )
+        print("PusherWebsocketReactNative: host \(host) port \(port) path \(path ?? "") useTLS \(useTLS) activityTimeout \(activityTimeout ?? 0)")
         PusherWebsocketReactNative.pusher = Pusher(key: args["apiKey"] as! String, options: options)
         if args["maxReconnectionAttempts"] is Int {
             PusherWebsocketReactNative.pusher.connection.reconnectAttemptsMax = (args["maxReconnectionAttempts"] as! Int)
