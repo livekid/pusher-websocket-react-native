@@ -75,13 +75,13 @@ PODS:
   - glog (0.3.5)
   - hermes-engine (0.70.5)
   - libevent (2.1.12)
-  - NWWebSocket (0.5.2)
+  - NWWebSocket (0.5.3)
   - OpenSSL-Universal (1.1.1100)
   - pusher-websocket-react-native (1.2.2):
     - PusherSwift (~> 10.1.1)
     - React
-  - PusherSwift (10.1.1):
-    - NWWebSocket (~> 0.5.2)
+  - PusherSwift (10.1.4):
+    - NWWebSocket (~> 0.5.3)
     - TweetNacl (~> 1.0.0)
   - RCT-Folly (2021.07.22.00):
     - boost
@@ -377,7 +377,7 @@ PODS:
     - React-perflogger (= 0.70.5)
   - RNCAsyncStorage (1.17.10):
     - React-Core
-  - SocketRocket (0.6.0)
+  - SocketRocket (0.6.1)
   - TweetNacl (1.0.2)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
@@ -560,10 +560,10 @@ SPEC CHECKSUMS:
   glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
   hermes-engine: 7fe5fc6ef707b7fdcb161b63898ec500e285653d
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
-  NWWebSocket: 21f0c73639815da3272862c912275b26102aa80c
+  NWWebSocket: 05fc4419102f33934f87157d70228837e327064f
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   pusher-websocket-react-native: ca8f78071843c907a13c364c1c0e21c05dbde934
-  PusherSwift: 70a805a950ab49381e164c54ac19c3b9c1d288e3
+  PusherSwift: 671c49e9c5441e30960d2e0282a879b2f8c80bcb
   RCT-Folly: 0080d0a6ebf2577475bda044aa59e2ca1f909cda
   RCTRequired: 21229f84411088e5d8538f21212de49e46cc83e2
   RCTTypeSafety: 62eed57a32924b09edaaf170a548d1fc96223086
@@ -592,11 +592,11 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: 7401c4a40f8728fd89df4a56104541b760876117
   ReactCommon: c9246996e73bf75a2c6c3ff15f1e16707cdc2da9
   RNCAsyncStorage: 0c357f3156fcb16c8589ede67cc036330b6698ca
-  SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
+  SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   TweetNacl: 3abf4d1d2082b0114e7a67410e300892448951e6
   Yoga: eca980a5771bf114c41a754098cd85e6e0d90ed7
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: d982d74711b8c9a54ff13a4f593f7931fb31358f
+PODFILE CHECKSUM: 3b89b6ea4068c0ab8d7480686a539e65fbc563cf
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.1

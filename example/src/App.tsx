@@ -1,24 +1,27 @@
 import * as React from 'react';
 
 import {
-  StyleSheet,
-  View,
-  Text,
-  SafeAreaView,
-  TextInput,
   Button,
-  Image,
-  ScrollView,
   FlatList,
+  Image,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
 } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   Pusher,
-  PusherMember,
+  PusherAuthorizerResult,
   PusherChannel,
   PusherEvent,
-  PusherAuthorizerResult,
-} from '../../src'; // This links the example app to the current SDK implementation
+  PusherMember,
+} from '../../src';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+// This links the example app to the current SDK implementation
 
 export default function App() {
   let logLines: string[] = [];
@@ -26,6 +29,7 @@ export default function App() {
 
   const [apiKey, onChangeApiKey] = React.useState('');
   const [cluster, onChangeCluster] = React.useState('');
+  const [host, onChangeHost] = React.useState('');
   const [channelName, onChangeChannelName] = React.useState('');
   const [eventName, onChangeEventName] = React.useState('');
   const [eventData, onChangeEventData] = React.useState('');
@@ -41,6 +45,7 @@ export default function App() {
     const getFromStorage = async () => {
       onChangeApiKey((await AsyncStorage.getItem('APIKEY')) || '');
       onChangeCluster((await AsyncStorage.getItem('CLUSTER')) || '');
+      onChangeHost((await AsyncStorage.getItem('HOST')) || '');
       onChangeChannelName((await AsyncStorage.getItem('CHANNEL')) || '');
       onChangeEventName((await AsyncStorage.getItem('EVENT')) || '');
       onChangeEventData((await AsyncStorage.getItem('DATA')) || '');
@@ -55,12 +60,15 @@ export default function App() {
       await AsyncStorage.multiSet([
         ['APIKEY', apiKey],
         ['CLUSTER', cluster],
+        ['HOST', host],
         ['CHANNEL', channelName],
       ]);
 
       await pusher.init({
         apiKey,
         cluster,
+        host,
+        useTLS: true,
         // authEndpoint
         // ============
         // You can let the pusher library call an endpoint URL,
@@ -160,16 +168,21 @@ export default function App() {
       `calling onAuthorizer. channelName=${channelName}, socketId=${socketId}`
     );
 
-    const response = await fetch('some_url', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        socket_id: socketId,
-        channel_name: channelName,
-      }),
-    });
+    const response = await fetch(
+      'https://api.staging.api-livekid-dev.com/v1/accounts/authenticate-socket',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization':
+            'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWJfcmVnaW9uIjoicGwwIiwicmV2aXNpb24iOjQ2LCJhY2NvdW50X2lkIjotODYzLCJtYWlsIjoicGlvdHIucHVsY2hueUBsaXZla2lkLmNvbSIsInR5cGUiOiJzY2hvb2wiLCJlbnYiOiJzdGFnaW5nIiwicmVnaW9uIjoicGwiLCJsYW5ndWFnZSI6InBsIiwiaWQiOjg2MywiZ3JvdXBzIjpbNDI5MjMsMTEyOCw0MjkyNCwxMjM3LDQyOTU4LDg2NF0sInBlcm1zIjpbInNjaG9vbCIsImVtcGxveWVlLW1hbmFnZW1lbnQiXSwic2lkIjo4NjN9.iK285_EzNBzXe68kZZ1zvalfxNN9sj9eTQkdvbiMiYE',
+        },
+        body: JSON.stringify({
+          socket_id: socketId,
+          channel_name: channelName,
+        }),
+      }
+    );
 
     const body = (await response.json()) as PusherAuthorizerResult;
 
@@ -221,6 +234,14 @@ export default function App() {
           />
           <TextInput
             style={styles.input}
+            onChangeText={onChangeHost}
+            value={host}
+            placeholder="Host"
+            autoCapitalize="none"
+            keyboardType="default"
+          />
+          <TextInput
+            style={styles.input}
             onChangeText={onChangeChannelName}
             value={channelName}
             placeholder="Channel"
@@ -230,7 +251,7 @@ export default function App() {
           <Button
             title="Connect"
             onPress={connect}
-            disabled={!(apiKey && cluster && channelName)}
+            disabled={!(apiKey && cluster && channelName && host)}
           />
         </>
       ) : (
