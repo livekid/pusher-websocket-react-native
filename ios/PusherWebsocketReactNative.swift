@@ -79,13 +79,12 @@ import Foundation
         }
         let options = PusherClientOptions(
             authMethod: authMethod,
+            autoReconnect: true,
             host: host,
             port: port,
             path: path,
             useTLS: useTLS,
-            activityTimeout: activityTimeout,
-            autoReconnect: true
-            
+            activityTimeout: activityTimeout
         )
         
         print("PusherWebsocketReactNative: host \(host) port \(port) path \(path ?? "") useTLS \(useTLS) activityTimeout \(activityTimeout ?? 0)")
